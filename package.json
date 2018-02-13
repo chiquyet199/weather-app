@@ -10,7 +10,7 @@
     "lint:watch": "esw -w src/**",
     "review": "npm run lint && npm test",
     "start": "npm run build && NODE_ENV=production node server.js",
-    "test":"jest src/**",
+    "test": "jest src/**",
     "test:watch": "jest src/** --watch",
     "test:watchAll": "jest src/** --watchAll",
     "test:coverage:report": "open coverage/lcov-report/index.html"
@@ -19,6 +19,7 @@
   "license": "ISC",
   "dependencies": {
     "babel-core": "^6.26.0",
+    "babel-jest": "^22.2.2",
     "babel-loader": "^7.1.2",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.0",
@@ -32,6 +33,7 @@
     "raf": "^3.3.2",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
+    "regenerator-runtime": "^0.11.1",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
     "webpack": "^3.6.0"
@@ -53,10 +55,7 @@
   },
   "jest": {
     "collectCoverage": true,
-    "collectCoverageFrom": [
-      "src/**",
-      "!src/index.js"
-    ],
+    "collectCoverageFrom": ["src/**", "!src/index.js"],
     "coverageThreshold": {
       "global": {
         "branches": 90,
@@ -65,15 +64,13 @@
         "statements": 90
       }
     },
-    "moduleDirectories": [
-      "node_modules",
-      "./"
-    ],
+    "moduleDirectories": ["node_modules", "./"],
     "moduleNameMapper": {
       "^.+.(css|scss|sass)$": "<rootDir>/__tests__/cssStub.js"
     },
-    "setupFiles": [
-      "raf/polyfill"
-    ]
+    "setupFiles": ["raf/polyfill"],
+    "transform": {
+      "^.+\\.js?$": "babel-jest"
+    }
   }
 }
