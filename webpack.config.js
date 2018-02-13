@@ -1,30 +1,34 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
-  template: './client/index.html',
-  filename: 'index.html',
-  inject: 'body'
-})
+const webpack = require('webpack')
+const path = require('path')
+// React v.16 uses some newer JS functionality, so to ensure everything
+// works across all browsers, we're adding babel-polyfill here.
+require('babel-polyfill')
 
 module.exports = {
-  entry: './client/index.js',
-  output: {
-    path: path.resolve('dist'),
-    // below line only works for webpack 1.0
-    // path: './dist', 
-    filename: 'index_bundle.js'
-  },
+  entry: ['./src/index'],
   module: {
     loaders: [
-      { 
-        test: /\.jsx?$/, 
-        loader: 'babel-loader', 
-        exclude: /node_modules/,
-        query: {
-          presets: ['es2015', 'react']
-        }
-      }
-    ]
+      { test: /\.js?$/, loader: 'babel-loader', exclude: /node_modules/ },
+      { test: /\.s?css$/, loader: 'style-loader!css-loader!sass-loader' },
+    ],
   },
-  plugins: [HtmlWebpackPluginConfig]
+  resolve: {
+    modules: [path.resolve('./'), path.resolve('./node_modules')],
+    extensions: ['.js', '.jsx', '.scss'],
+  },
+  output: {
+    path: path.join(__dirname, '/dist'),
+    publicPath: '/',
+    filename: 'bundle.js',
+  },
+  devtool: 'cheap-eval-source-map',
+  devServer: {
+    contentBase: './dist',
+    hot: true,
+  },
+  plugins: [
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
+  ],
 }
