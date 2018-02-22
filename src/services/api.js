@@ -10,9 +10,6 @@ class Api {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     }
-    if (this.token) {
-      headers['Authorization'] = 'Bearer ' + this.token
-    }
     return headers
   }
 
@@ -37,7 +34,6 @@ class Api {
     return new Promise((resolve, reject) => {
       axios
         .request(options)
-        .then(this.checkStatus)
         .then(result => resolve(result))
         .catch(error => {
           reject(error)

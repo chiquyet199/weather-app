@@ -2,9 +2,22 @@ import { FETCH_NEW } from 'actions/news'
 
 const initialState = [
   {
-    id: 123,
-    title: 'post1',
-    content: '123123',
+    _id: 123,
+    snippet: 'This is snippet',
+    pub_date: '13 Feb 2018',
+    source: 'this is source',
+    multimedia: [
+      {
+        url: 'string',
+        format: 'string',
+        height: 100,
+        width: 100,
+        type: 'video',
+        subtype: 'string',
+        caption: 'string',
+        copyright: 'string',
+      },
+    ],
   },
   {
     id: 124,
